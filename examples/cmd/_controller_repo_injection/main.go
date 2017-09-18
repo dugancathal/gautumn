@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/dugancathal/gautumn/gautumn"
-	"github.com/dugancathal/gautumn/gautumn/web"
+	"github.com/dugancathal/gautumn"
+	"github.com/dugancathal/gautumn/web"
 )
 
 // application code
@@ -32,8 +32,8 @@ func (c *moviesController) Index(repo repo) web.ControllerAction {
 	}
 }
 
-func (c *moviesController) InjectedIndex() web.JsonControllerAction {
-	return gautumn.DefaultInjected(c.Index).(web.JsonControllerAction)
+func (c *moviesController) InjectedIndex() web.ControllerAction {
+	return gautumn.DefaultInjected(c.Index).(web.ControllerAction)
 }
 
 func main() {

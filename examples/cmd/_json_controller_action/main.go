@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/dugancathal/gautumn/gautumn/web"
+	"github.com/dugancathal/gautumn/web"
 )
 
 type foo struct {
