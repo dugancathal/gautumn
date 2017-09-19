@@ -16,6 +16,9 @@ type Container map[string]reflect.Value
 
 func (c Container) GetDep(name string) reflect.Value {
 	if val, ok := c[name]; ok {
+		if val.Type().Kind() == reflect.Func {
+			return reflect.ValueOf(Injected(val.Interface(), c))
+		}
 		return val
 	} else {
 		panic(fmt.Errorf("Could not find dependency for type: %s", name))
@@ -34,5 +37,15 @@ func (c Container) RegisterByType(value interface{}) {
 }
 
 func (c Container) RegisterByInterface(inter interface{}, value interface{}) {
-	c.RegisterByName(reflect.TypeOf(inter).Elem().String(), value)
+	c.RegisterByName(reflect.TypeOf(inter).String(), value)
+}
+
+func (c Container) RegisterByConstructor(constructor interface{}) {
+	construct := reflect.TypeOf(constructor)
+	if construct.NumOut() != 1 {
+		panic("Registering by injectable requires a function that returns exactly 1 item: the item to construct")
+	}
+
+	outType := construct.Out(0)
+	c.RegisterByName(outType.String(), constructor)
 }
