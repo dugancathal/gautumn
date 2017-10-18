@@ -37,7 +37,7 @@ func (c Container) RegisterByType(value interface{}) {
 }
 
 func (c Container) RegisterByInterface(inter interface{}, value interface{}) {
-	c.RegisterByName(reflect.TypeOf(inter).String(), value)
+	c.RegisterByName(reflect.TypeOf(inter).Elem().String(), value)
 }
 
 func (c Container) RegisterByConstructor(constructor interface{}) {

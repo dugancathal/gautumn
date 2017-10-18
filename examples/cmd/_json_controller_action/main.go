@@ -25,9 +25,9 @@ func (c *fooController) Index() web.JsonControllerAction {
 func main() {
 	controller := &fooController{}
 
-	web.MapRoutes(web.RouteMap{
+	mux := web.MapRoutes(web.HandlerMap{
 		"/movies": controller.Index(),
 	})
 	fmt.Printf("Serving on %d\n", 8080)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }
